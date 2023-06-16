@@ -16,39 +16,39 @@ if [ "$INPUT_SHOW_INFO" = "true"]; then
   SHOW_INFO="--show-info=true"
 fi
 
-if [ -n "$INPUT_SSH_KEY" ]
-then
-    echo "::group::Keys setup for private repositories"
+# if [ -n "$INPUT_SSH_KEY" ]
+# then
+#     echo "::group::Keys setup for private repositories"
 
-    echo "Keyscan:"
-    mkdir -p /tmp/.ssh
-    ssh-keyscan -t rsa github.com >> /tmp/.ssh/known_hosts
-    ssh-keyscan -t rsa gitlab.com >> /tmp/.ssh/known_hosts
-    ssh-keyscan -t rsa bitbucket.org >> /tmp/.ssh/known_hosts
+#     echo "Keyscan:"
+#     mkdir -p /tmp/.ssh
+#     ssh-keyscan -t rsa github.com >> /tmp/.ssh/known_hosts
+#     ssh-keyscan -t rsa gitlab.com >> /tmp/.ssh/known_hosts
+#     ssh-keyscan -t rsa bitbucket.org >> /tmp/.ssh/known_hosts
 
-    if [ -n "$INPUT_SSH_DOMAIN" ]
-    then
-      ssh-keyscan -t rsa "$INPUT_SSH_DOMAIN" >> /tmp/.ssh/known_hosts
-    fi
-    echo "Installing keys:"
+#     if [ -n "$INPUT_SSH_DOMAIN" ]
+#     then
+#       ssh-keyscan -t rsa "$INPUT_SSH_DOMAIN" >> /tmp/.ssh/known_hosts
+#     fi
+#     echo "Installing keys:"
 
-    echo "$INPUT_SSH_KEY" > /tmp/.ssh/action_rsa
-    echo "$INPUT_SSH_KEY_PUB" > /tmp/.ssh/action_rsa.pub
-    chmod 600 /tmp/.ssh/action_rsa
+#     echo "$INPUT_SSH_KEY" > /tmp/.ssh/action_rsa
+#     echo "$INPUT_SSH_KEY_PUB" > /tmp/.ssh/action_rsa.pub
+#     chmod 600 /tmp/.ssh/action_rsa
 
-    echo "Private key hash:"
-    md5sum /tmp/.ssh/action_rsa
-    echo "Public key hash:"
-    md5sum /tmp/.ssh/action_rsa.pub
+#     echo "Private key hash:"
+#     md5sum /tmp/.ssh/action_rsa
+#     echo "Public key hash:"
+#     md5sum /tmp/.ssh/action_rsa.pub
 
-    echo "[core]" >> ~/.gitconfig
-    echo "sshCommand = \"ssh -i /tmp/.ssh/action_rsa -o UserKnownHostsFile=/tmp/.ssh/known_hosts\"" >> ~/.gitconfig
+#     echo "[core]" >> ~/.gitconfig
+#     echo "sshCommand = \"ssh -i /tmp/.ssh/action_rsa -o UserKnownHostsFile=/tmp/.ssh/known_hosts\"" >> ~/.gitconfig
 
-    echo "OK"
-    echo "::endgroup::"
-else
-	  echo "No private keys supplied"
-fi
+#     echo "OK"
+#     echo "::endgroup::"
+# else
+# 	  echo "No private keys supplied"
+# fi
 
 if [ -n "$INPUT_RELATIVE_DIR" ]
 then
