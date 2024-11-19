@@ -1,4 +1,4 @@
-FROM php:7.3-alpine
+FROM php:7.4.33-alpine
 
 LABEL "com.github.actions.name"="Psalm - Code quality tool for PHP"
 LABEL "com.github.actions.description"="A static analysis tool for finding errors in PHP applications"
